@@ -31,7 +31,7 @@ a { color: #93c5fd; text-decoration: none; }
 .sidebar a.active,
 .sidebar a:hover { background: #1e293b; color: #e2e8f0; }
 
-.content { flex: 1; padding: 24px; }
+.content { flex: 1; padding: 24px; background: linear-gradient(180deg, #1f2937 0%, #111827 100%); }
 
 .panel,
 .chart-box,
@@ -114,3 +114,5 @@ tr:hover { background: #243247; }
   .app-shell { flex-direction: column; }
   .sidebar { width: 100%; }
 }
+
+.auth-links { display: grid; gap: 6px; justify-items: center; }

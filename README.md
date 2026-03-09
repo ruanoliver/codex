@@ -9,6 +9,7 @@ Base funcional inicial com arquitetura modular:
 ## Funcionalidades
 
 - Login e cadastro com papéis: administrador, gerência e padrão
+- Redefinição de senha na tela inicial de autenticação
 - Controle de permissões configurável e editável por administradores/gestores autorizados
 - Dashboard com navegação lateral
 - CRUD de registros de quilometragem (KMS-M)
@@ -29,8 +30,8 @@ npm run dev
 
 Usuário inicial:
 
-- Email: `admin@kmsm.local`
-- Senha: `admin123`
+- Usuário: `Admin` (ou e-mail `admin@kmsm.local`)
+- Senha: `Senha@123`
 
 ### Frontend
 

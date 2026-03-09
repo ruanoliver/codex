@@ -71,12 +71,12 @@ app.post('/api/auth/register', async (req, res) => {
 });
 
 app.post('/api/auth/login', async (req, res) => {
-  const email = sanitizeText(req.body.email).toLowerCase();
+  const identifier = sanitizeText(req.body.identifier).toLowerCase();
   const password = String(req.body.password || '');
 
-  if (!email || !password) return res.status(400).json({ message: 'Informe e-mail e senha' });
+  if (!identifier || !password) return res.status(400).json({ message: 'Informe usuário/e-mail e senha' });
 
-  const user = await get('SELECT * FROM users WHERE email = ?', [email]);
+  const user = await get('SELECT * FROM users WHERE LOWER(email) = ? OR LOWER(name) = ?', [identifier, identifier]);
   if (!user) return res.status(401).json({ message: 'Credenciais inválidas' });
 
   const ok = await bcrypt.compare(password, user.password_hash);
@@ -85,6 +85,22 @@ app.post('/api/auth/login', async (req, res) => {
   const permissions = await get('SELECT can_create, can_edit, can_delete, can_manage_users FROM permissions WHERE user_id = ?', [user.id]);
   const safeUser = { id: user.id, name: user.name, email: user.email, role: user.role, permissions };
   res.json({ user: safeUser, token: signToken(user) });
+});
+
+app.post('/api/auth/reset-password', async (req, res) => {
+  const identifier = sanitizeText(req.body.identifier).toLowerCase();
+  const newPassword = String(req.body.newPassword || '');
+
+  if (!identifier || newPassword.length < 6) {
+    return res.status(400).json({ message: 'Informe usuário/e-mail e uma nova senha válida.' });
+  }
+
+  const user = await get('SELECT id FROM users WHERE LOWER(email) = ? OR LOWER(name) = ?', [identifier, identifier]);
+  if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+
+  const hash = await bcrypt.hash(newPassword, 10);
+  await run('UPDATE users SET password_hash = ? WHERE id = ?', [hash, user.id]);
+  res.json({ message: 'Senha redefinida com sucesso.' });
 });
 
 app.get('/api/auth/me', authenticate, (req, res) => res.json(req.user));
@@ -236,11 +252,12 @@ app.get('/api/reports/summary', authenticate, async (req, res) => {
 });
 
 initDb().then(async () => {
-  const admin = await get('SELECT id FROM users WHERE role = ?', ['admin']);
+  const admin = await get("SELECT id FROM users WHERE LOWER(name) = 'admin' OR LOWER(email) = 'admin@kmsm.local' OR role = 'admin' LIMIT 1");
+  const hash = await bcrypt.hash('Senha@123', 10);
+
   if (!admin) {
-    const hash = await bcrypt.hash('admin123', 10);
     const inserted = await run('INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)', [
-      'Administrador',
+      'Admin',
       'admin@kmsm.local',
       hash,
       'admin',
@@ -250,6 +267,18 @@ initDb().then(async () => {
       `INSERT INTO permissions (user_id, can_create, can_edit, can_delete, can_manage_users)
       VALUES (?, ?, ?, ?, ?)`,
       [inserted.lastID, p.can_create, p.can_edit, p.can_delete, p.can_manage_users]
+    );
+  } else {
+    await run("UPDATE users SET name = 'Admin', email = 'admin@kmsm.local', password_hash = ?, role = 'admin' WHERE id = ?", [hash, admin.id]);
+    await run(
+      `INSERT INTO permissions (user_id, can_create, can_edit, can_delete, can_manage_users)
+       VALUES (?, 1, 1, 1, 1)
+       ON CONFLICT(user_id) DO UPDATE SET
+         can_create = 1,
+         can_edit = 1,
+         can_delete = 1,
+         can_manage_users = 1`,
+      [admin.id]
     );
   }
 
