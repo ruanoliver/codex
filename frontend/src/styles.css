@@ -1,0 +1,25 @@
+:root { font-family: Inter, Arial, sans-serif; color: #0f172a; background: #f8fafc; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: #1d4ed8; text-decoration: none; }
+.app-shell { display: flex; min-height: 100vh; }
+.sidebar { width: 240px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.sidebar nav { display: flex; flex-direction: column; gap: 8px; }
+.sidebar a { color: #dbeafe; }
+.content { flex: 1; padding: 24px; }
+.panel, .chart-box, .card { background: white; border-radius: 10px; padding: 16px; box-shadow: 0 2px 10px rgba(2,6,23,0.08); }
+.centered { min-height: 100vh; display: grid; place-items: center; }
+form { display: grid; gap: 10px; }
+input, select, textarea, button { padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
+button { background: #2563eb; color: white; cursor: pointer; border: none; }
+.grid-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 12px; margin: 12px 0; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 10px; }
+.cep-field { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.hint { margin: 0; color: #1d4ed8; font-size: 0.92rem; }
+table { width: 100%; border-collapse: collapse; margin-top: 14px; background: white; }
+th, td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; }
+.error { color: #dc2626; }
+@media (max-width: 800px) {
+  .app-shell { flex-direction: column; }
+  .sidebar { width: 100%; }
+}
