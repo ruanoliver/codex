@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
 
+ codex/develop-complete-web-application-with-crud-mkocbb
 const initial = {
   date: '',
   time: '',
@@ -13,12 +14,18 @@ const initial = {
 };
 
 const normalizeCep = (value) => value.replace(/\D/g, '').slice(0, 8);
+=======
+const initial = { date: '', time: '', destination: '', address: '', route_description: '', kilometers: '', origin_address: '' };
+ main
 
 export default function KmsPage() {
   const [records, setRecords] = useState([]);
   const [form, setForm] = useState(initial);
   const [editingId, setEditingId] = useState(null);
+ codex/develop-complete-web-application-with-crud-mkocbb
   const [cepStatus, setCepStatus] = useState('');
+=======
+ main
 
   const load = async () => {
     const { data } = await api.get('/api/kms-records');
@@ -29,6 +36,7 @@ export default function KmsPage() {
     load();
   }, []);
 
+ codex/develop-complete-web-application-with-crud-mkocbb
   const lookupCep = async (rawCep) => {
     const cep = normalizeCep(rawCep || form.cep);
 
@@ -68,6 +76,8 @@ export default function KmsPage() {
     }
   };
 
+=======
+ main
   const submit = async (e) => {
     e.preventDefault();
     if (editingId) await api.put(`/api/kms-records/${editingId}`, form);
@@ -75,7 +85,10 @@ export default function KmsPage() {
 
     setForm(initial);
     setEditingId(null);
+ codex/develop-complete-web-application-with-crud-mkocbb
     setCepStatus('');
+=======
+ main
     load();
   };
 
@@ -86,8 +99,12 @@ export default function KmsPage() {
 
   const startEdit = (row) => {
     setEditingId(row.id);
+ codex/develop-complete-web-application-with-crud-mkocbb
     setForm({ ...row, cep: '' });
     setCepStatus('');
+=======
+    setForm(row);
+ main
   };
 
   return (
@@ -98,6 +115,7 @@ export default function KmsPage() {
           <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} required />
           <input type="time" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} required />
           <input placeholder="Destino" value={form.destination} onChange={(e) => setForm({ ...form, destination: e.target.value })} required />
+ codex/develop-complete-web-application-with-crud-mkocbb
           <div className="cep-field">
             <input
               placeholder="CEP (somente números)"
@@ -109,11 +127,16 @@ export default function KmsPage() {
             />
             <button type="button" onClick={() => lookupCep(form.cep)}>Buscar CEP</button>
           </div>
+=======
+ main
           <input placeholder="Endereço" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} required />
           <input placeholder="Origem (opcional)" value={form.origin_address} onChange={(e) => setForm({ ...form, origin_address: e.target.value })} />
           <input placeholder="KM" type="number" step="0.1" value={form.kilometers} onChange={(e) => setForm({ ...form, kilometers: e.target.value })} required />
         </div>
+ codex/develop-complete-web-application-with-crud-mkocbb
         {cepStatus ? <p className="hint">{cepStatus}</p> : null}
+=======
+ main
         <textarea placeholder="Descrição do percurso" value={form.route_description} onChange={(e) => setForm({ ...form, route_description: e.target.value })} />
         <button>{editingId ? 'Salvar edição' : 'Criar registro'}</button>
       </form>
@@ -132,7 +155,11 @@ export default function KmsPage() {
               <td>
                 <button onClick={() => startEdit(r)}>Editar</button>
                 <button onClick={() => remove(r.id)}>Excluir</button>
+ codex/develop-complete-web-application-with-crud-mkocbb
                 {r.google_maps_url ? <a href={r.google_maps_url} target="_blank" rel="noreferrer">Visualizar Rota</a> : null}
+=======
+                {r.google_maps_url ? <a href={r.google_maps_url} target="_blank">Visualizar Rota</a> : null}
+ main
               </td>
             </tr>
           ))}

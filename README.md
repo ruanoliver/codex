@@ -15,7 +15,10 @@ Base funcional inicial com arquitetura modular:
 - Relatórios automáticos (semanal e mensal)
 - Gráficos interativos com Recharts
 - Integração com Google Maps para visualizar rota
+ codex/develop-complete-web-application-with-crud-mkocbb
 - Preenchimento automático de endereço a partir do CEP (ViaCEP)
+=======
+ main
 
 ## Executando
 
