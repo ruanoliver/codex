@@ -11,6 +11,7 @@ export default function ReportsPage() {
     byDestination: [],
     byPeriod: [],
   });
+  const [summary, setSummary] = useState({ weeklyTotal: 0, monthlyTotal: 0, byDestination: [], byPeriod: [] });
 
   useEffect(() => {
     api.get('/api/reports/summary').then(({ data }) => setSummary(data));
@@ -24,6 +25,8 @@ export default function ReportsPage() {
         <div className="card"><span className="muted">Semanal</span><strong>{summary.weeklyTotal} km</strong></div>
         <div className="card"><span className="muted">Mensal</span><strong>{summary.monthlyTotal} km</strong></div>
         <div className="card"><span className="muted">Registros</span><strong>{summary.totalRecords}</strong></div>
+        <div className="card">Total semanal: <strong>{summary.weeklyTotal} km</strong></div>
+        <div className="card">Total mensal: <strong>{summary.monthlyTotal} km</strong></div>
       </div>
 
       <div className="chart-box">
@@ -33,6 +36,9 @@ export default function ReportsPage() {
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
             <XAxis dataKey="region" stroke="#94a3b8" />
             <YAxis stroke="#94a3b8" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="region" />
+            <YAxis />
             <Tooltip />
             <Legend />
             <Bar dataKey="total" fill="#2563eb" />
@@ -50,6 +56,15 @@ export default function ReportsPage() {
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="total" stroke="#3b82f6" />
+        <h3>Comparação por período</h3>
+        <ResponsiveContainer width="100%" height={260}>
+          <LineChart data={summary.byPeriod}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="period" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="total" stroke="#16a34a" />
           </LineChart>
         </ResponsiveContainer>
       </div>

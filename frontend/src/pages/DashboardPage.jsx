@@ -13,6 +13,8 @@ function Home() {
     api.get('/api/reports/summary').then(({ data }) => setSummary(data)).catch(() => {});
   }, []);
 
+
+function Home() {
   return (
     <div>
       <h1>Painel Principal</h1>
@@ -26,6 +28,9 @@ function Home() {
         <Link className="card card-link" to="/kms">Novo registro</Link>
         <Link className="card card-link" to="/reports">Ver relatórios</Link>
         <Link className="card card-link" to="/users">Gerenciar usuários</Link>
+        <Link className="card" to="/kms">KMS-M</Link>
+        <Link className="card" to="/reports">Relatórios</Link>
+        <Link className="card" to="/users">Gerenciar Usuários</Link>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function RegisterPage() {
@@ -33,6 +34,17 @@ export default function RegisterPage() {
         <input placeholder="Nome" required onChange={(e) => setForm({ ...form, name: e.target.value })} />
         <input placeholder="E-mail" required onChange={(e) => setForm({ ...form, email: e.target.value })} />
         <input type="password" minLength={6} placeholder="Senha" required onChange={(e) => setForm({ ...form, password: e.target.value })} />
+    await register(form);
+    navigate('/');
+  };
+
+  return (
+    <div className="centered">
+      <form onSubmit={submit} className="panel">
+        <h1>Cadastro</h1>
+        <input placeholder="Nome" required onChange={(e) => setForm({ ...form, name: e.target.value })} />
+        <input placeholder="E-mail" required onChange={(e) => setForm({ ...form, email: e.target.value })} />
+        <input type="password" placeholder="Senha" required onChange={(e) => setForm({ ...form, password: e.target.value })} />
         <select onChange={(e) => setForm({ ...form, role: e.target.value })}>
           <option value="admin">Administrador</option>
           <option value="management">Gerência</option>

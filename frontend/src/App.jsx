@@ -12,6 +12,10 @@ function PrivateRoute({ children }) {
     return <div className="fullscreen-loader">Validando sessão...</div>;
   }
 
+import DashboardPage from './pages/DashboardPage';
+
+function PrivateRoute({ children }) {
+  const { token } = useAuth();
   return token ? children : <Navigate to="/login" replace />;
 }
 
@@ -32,6 +36,7 @@ export default function App() {
         }
       />
       <Route path="*" element={<Navigate to={token ? '/' : '/login'} replace />} />
+      <Route path="*" element={<Navigate to={token ? '/' : '/login'} />} />
     </Routes>
   );
 }

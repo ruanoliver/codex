@@ -20,6 +20,16 @@ export default function LoginPage() {
       setError('Credenciais inválidas. Verifique e tente novamente.');
     } finally {
       setSubmitting(false);
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+
+  const submit = async (e) => {
+    e.preventDefault();
+    try {
+      await login(form.email, form.password);
+      navigate('/');
+    } catch {
+      setError('Falha no login');
     }
   };
 
@@ -47,6 +57,14 @@ export default function LoginPage() {
           <Link to="/register" className="muted-link">Criar conta</Link>
           <Link to="/forgot-password" className="muted-link">Redefinir senha</Link>
         </div>
+    <div className="centered">
+      <form onSubmit={submit} className="panel">
+        <h1>Login</h1>
+        {error && <p className="error">{error}</p>}
+        <input placeholder="E-mail" onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+        <input type="password" placeholder="Senha" onChange={(e) => setForm({ ...form, password: e.target.value })} required />
+        <button>Entrar</button>
+        <Link to="/register">Criar conta</Link>
       </form>
     </div>
   );

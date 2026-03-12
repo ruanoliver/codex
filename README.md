@@ -17,6 +17,9 @@ Base funcional inicial com arquitetura modular:
 - Gráficos interativos com Recharts
 - Integração com Google Maps para visualizar rota
 - Preenchimento automático de endereço a partir do CEP (ViaCEP)
+ codex/develop-complete-web-application-with-crud-mkocbb
+- Preenchimento automático de endereço a partir do CEP (ViaCEP)
+ main
 
 ## Executando
 
@@ -32,6 +35,8 @@ Usuário inicial:
 
 - Usuário: `Admin` (ou e-mail `admin@kmsm.local`)
 - Senha: `Senha@123`
+- Email: `admin@kmsm.local`
+- Senha: `admin123`
 
 ### Frontend
 

@@ -13,6 +13,10 @@ export default function UsersPage() {
     } catch (err) {
       setError(err.response?.data?.message || 'Sem permissão para visualizar usuários.');
     }
+
+  const load = async () => {
+    const { data } = await api.get('/api/users');
+    setUsers(data);
   };
 
   useEffect(() => {
@@ -40,6 +44,7 @@ export default function UsersPage() {
       <table>
         <thead>
           <tr><th>Nome</th><th>Perfil</th><th>Criar</th><th>Editar</th><th>Excluir</th><th>Gerenciar</th><th /></tr>
+          <tr><th>Nome</th><th>Perfil</th><th>Criar</th><th>Editar</th><th>Excluir</th><th>Gerenciar</th><th></th></tr>
         </thead>
         <tbody>
           {users.map((u) => (
@@ -47,6 +52,7 @@ export default function UsersPage() {
               <td>{u.name}</td>
               <td>
                 <select value={u.role} onChange={(e) => setUsers(users.map((x) => (x.id === u.id ? { ...x, role: e.target.value } : x)))}>
+                <select value={u.role} onChange={(e) => setUsers(users.map((x) => x.id === u.id ? { ...x, role: e.target.value } : x))}>
                   <option value="admin">Administrador</option>
                   <option value="management">Gerência</option>
                   <option value="standard">Padrão</option>
@@ -58,6 +64,7 @@ export default function UsersPage() {
                     type="checkbox"
                     checked={Boolean(u[key])}
                     onChange={(e) => setUsers(users.map((x) => (x.id === u.id ? { ...x, [key]: e.target.checked ? 1 : 0 } : x)))}
+                    onChange={(e) => setUsers(users.map((x) => x.id === u.id ? { ...x, [key]: e.target.checked ? 1 : 0 } : x))}
                   />
                 </td>
               ))}
