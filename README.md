@@ -9,15 +9,16 @@ Base funcional inicial com arquitetura modular:
 ## Funcionalidades
 
 - Login e cadastro com papéis: administrador, gerência e padrão
+- Redefinição de senha na tela inicial de autenticação
 - Controle de permissões configurável e editável por administradores/gestores autorizados
 - Dashboard com navegação lateral
 - CRUD de registros de quilometragem (KMS-M)
 - Relatórios automáticos (semanal e mensal)
 - Gráficos interativos com Recharts
 - Integração com Google Maps para visualizar rota
+- Preenchimento automático de endereço a partir do CEP (ViaCEP)
  codex/develop-complete-web-application-with-crud-mkocbb
 - Preenchimento automático de endereço a partir do CEP (ViaCEP)
-=======
  main
 
 ## Executando
@@ -32,6 +33,8 @@ npm run dev
 
 Usuário inicial:
 
+- Usuário: `Admin` (ou e-mail `admin@kmsm.local`)
+- Senha: `Senha@123`
 - Email: `admin@kmsm.local`
 - Senha: `admin123`
 
